@@ -3,3 +3,4 @@ notes.md
 *.db
 .venv*
 .direnv*
+*__pycache__*
