@@ -1,0 +1,5 @@
+notes.md
+.envrc
+*.db
+.venv*
+.direnv*
