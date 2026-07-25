@@ -53,9 +53,9 @@ with tab2:
         "Median relative frequency", f"{filtered_df['percentage'].median():.2f}%"
     )
 
-    st.dataframe(filtered_df, use_container_width=True)
+    st.dataframe(filtered_df, width="stretch")
 
-    st.plotly_chart(overview_fig, use_container_width=True)
+    st.plotly_chart(overview_fig, width="stretch")
 
 with tab3:
     p_vals, combined_fig = stats_results
@@ -66,11 +66,9 @@ with tab3:
     )
     p_df["Significant (p < 0.05)"] = p_df["p-value"] < 0.05
 
-    st.dataframe(
-        p_df.style.apply(_highlight_significant, axis=1), use_container_width=True
-    )
+    st.dataframe(p_df.style.apply(_highlight_significant, axis=1), width="stretch")
 
-    st.plotly_chart(combined_fig, use_container_width=True)
+    st.plotly_chart(combined_fig, width="stretch")
 
 with tab4:
     st.subheader("Baseline melanoma PBMC samples, miraclib-treated")
@@ -96,4 +94,4 @@ with tab_bcell:
         title="Average B cell count by sex & response (melanoma, baseline)",
         yaxis_title="Average B cell count",
     )
-    st.plotly_chart(bcell_fig, use_container_width=True)
+    st.plotly_chart(bcell_fig, width="stretch")
