@@ -6,13 +6,14 @@ import modules.b_cell_calculation as b_cell
 HEADER_WIDTH = 50
 
 print(" Part 2: Initial Analysis - Data Overview ".center(HEADER_WIDTH, "="))
-samples_df = init.get_samples_df()
+samples_df, _ = init.get_samples_df()
 print(samples_df, end="\n\n")
 
 print(" Part 3: Statistical Analysis ".center(HEADER_WIDTH, "="))
 stats_results, _ = stat.statistical_analysis(samples_df)
+print_offset = max([len(key) for key in stats_results.keys()]) + 1
 for population, p_val in stats_results.items():
-    print(f"{population}: {p_val}")
+    print(f"{(population + ":").ljust(print_offset)} {p_val}")
 print()
 
 print(" Part 4 Data Subset Analysis ".center(HEADER_WIDTH, "="))

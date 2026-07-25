@@ -1,0 +1,11 @@
+How many samples are from each project?,How many subjects were responders/non-responders?,How many subjects were males/females?
+"project
+prj1    384
+prj3    272
+dtype: int64","response
+no     325
+yes    331
+dtype: int64","sex
+F    312
+M    344
+dtype: int64"

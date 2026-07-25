@@ -8,7 +8,7 @@ from modules.initial_analysis import get_samples_df
 
 def statistical_analysis(
     samples_df=None,
-) -> tuple[dict[str, float], dict[str, go.Figure]]:
+) -> tuple[dict[str, float], go.Figure]:
     if samples_df is None:
         samples_df = get_samples_df()
 
@@ -31,20 +31,32 @@ def statistical_analysis(
     nonresponders_df = filtered_df.query('response == "no"')
 
     p_vals = dict()
-    figures = dict()
-    for population in cell_types:
+    # figures = dict()
+    fig = go.Figure()
+    for i, population in enumerate(cell_types):
         responder_pop = responders_df.query("population == @population")
         nonresponder_pop = nonresponders_df.query("population == @population")
 
-        # Visualize the population relative frequencies comparing responders versus non-responders using a boxplot of for each immune cell population
-        # TODO: This figure needs a lot of work -> combine to one figure?
-        fig = go.Figure()
-        fig.add_trace(go.Box(y=responder_pop["percentage"], name="Responders"))
-        fig.add_trace(go.Box(y=nonresponder_pop["percentage"], name="Non-Responders"))
-        fig.update_layout(title=population, yaxis_title="Relative Frequency (%)")
-
-        figures[population] = fig
-        fig.write_html(os.path.join(OUT_DIR, f"{population}_responders_box.html"))
+        fig.add_trace(
+            go.Box(
+                x=[population] * len(responder_pop["percentage"]),
+                y=responder_pop["percentage"],
+                name="Responders",
+                legendgroup="Responders",
+                marker_color="#636EFA",
+                showlegend=(i == 0),
+            )
+        )
+        fig.add_trace(
+            go.Box(
+                x=[population] * len(nonresponder_pop["percentage"]),
+                y=nonresponder_pop["percentage"],
+                name="Non-Responders",
+                legendgroup="Non-Responders",
+                marker_color="#EF553B",
+                showlegend=(i == 0),
+            )
+        )
 
         # Report which cell populations have a significant difference in relative frequencies between responders and non-responders. Statistics are needed to support any conclusion to convince Yah of Bob’s findings.
         test_result = ttest_ind(
@@ -59,7 +71,13 @@ def statistical_analysis(
             writer.writerow(p_vals.keys())
             writer.writerow(p_vals.values())
 
-    return p_vals, figures
+    fig.update_layout(
+        boxmode="group",
+        title="Responders vs. Non-Responders by Population",
+        yaxis_title="Relative Frequency (%)",
+    )
+    fig.write_html(os.path.join(OUT_DIR, "responders_box.html"))
+    return p_vals, fig
 
 
 if __name__ == "__main__":

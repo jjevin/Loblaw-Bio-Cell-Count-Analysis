@@ -4,4 +4,3 @@ notes.md
 .venv*
 .direnv*
 *__pycache__*
-outputs/*

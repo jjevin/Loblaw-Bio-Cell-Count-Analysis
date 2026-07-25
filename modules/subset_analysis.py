@@ -19,15 +19,13 @@ def subset_analysis() -> dict[str, pd.DataFrame]:
     subset_df = query_db(query)
 
     queries = dict()
-    queries["1. How many samples are from each project?"] = subset_df.groupby(
+    queries["How many samples are from each project?"] = subset_df.groupby(
         ["project"]
     ).size()
-    queries["2. How many subjects were responders/non-responders?"] = subset_df.groupby(
+    queries["How many subjects were responders/non-responders?"] = subset_df.groupby(
         ["response"]
     ).size()
-    queries["3. How many subjects were males/females?"] = subset_df.groupby(
-        ["sex"]
-    ).size()
+    queries["How many subjects were males/females?"] = subset_df.groupby(["sex"]).size()
 
     with open(
         os.path.join(OUT_DIR, "subset_analysis.csv"), mode="w", newline=""
