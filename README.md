@@ -34,8 +34,7 @@ This project is laid out as follows:
 ``` shell
 ├── cell-count.db     # SQLITE database in project root as requested
 ├── dashboard.py
-├── data
-│   └── cell-count.csv
+├── data/cell-count.csv
 ├── flake.lock
 ├── flake.nix
 ├── load_data.py
@@ -46,6 +45,7 @@ This project is laid out as follows:
 │   ├── statistical_analysis.py
 │   ├── subset_analysis.py
 │   └── utils.py
+├── outputs/    # Sample pipeline outputs generated w/ GitHub action
 ├── pipeline.py
 ├── README.md
 └── requirements.txt

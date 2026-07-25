@@ -1,0 +1,41 @@
+name: Run Pipeline
+
+on:
+    push:
+        branches: [main]
+        paths-ignore:
+        - 'README.md'
+    workflow_dispatch: {}
+
+permissions:
+    contents: write
+
+jobs:
+    pipeline:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Set up Python
+              uses: actions/setup-python@v5
+              with:
+                python-version: "3.12"
+
+            - name: Setup
+              run: make setup
+              
+            - name: Run pipeline
+              run: make pipeline
+
+            - name: Commit regenerated outputs
+              run: |
+                   git config user.name "github-actions[bot]"
+                   git config user.email "github-actions[bot]@users.noreply.github.com"
+                   git add output/
+                   if git diff --cached --quite; then
+                      echo "No changes to commit"
+                   else
+                      git commit -m "Regenerated pipeline outputs [skip ci]"
+                      git push
+                   fi
