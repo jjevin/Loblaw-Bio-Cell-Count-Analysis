@@ -1,4 +1,4 @@
-import csv
+import csv, os
 import pandas as pd
 from modules.utils import query_db, OUT_DIR
 
@@ -29,7 +29,9 @@ def subset_analysis() -> dict[str, pd.DataFrame]:
         ["sex"]
     ).size()
 
-    with open(OUT_DIR + "subset_analysis.csv", mode="w", newline="") as file:
+    with open(
+        os.path.join(OUT_DIR, "subset_analysis.csv"), mode="w", newline=""
+    ) as file:
         writer = csv.writer(file)
         writer.writerow(queries.keys())
         writer.writerow(queries.values())

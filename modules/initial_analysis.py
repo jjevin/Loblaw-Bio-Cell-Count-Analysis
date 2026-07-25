@@ -1,3 +1,4 @@
+import os
 import pandas as pd
 from modules.utils import query_db, OUT_DIR
 
@@ -34,7 +35,7 @@ def get_samples_df() -> pd.DataFrame:
     # percentage: relative frequency in percentage
     samples_df["percentage"] = samples_df["count"] * 100 / samples_df["total_count"]
 
-    samples_df.to_csv(OUT_DIR + "samples.csv")
+    samples_df.to_csv(os.path.join(OUT_DIR, "samples.csv"))
 
     return samples_df
 

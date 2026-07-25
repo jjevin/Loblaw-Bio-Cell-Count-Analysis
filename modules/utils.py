@@ -1,9 +1,12 @@
+import os
 from sqlite3 import connect
 import pandas as pd
 
 CSV_FILE = r"./data/cell-count.csv"
 DB_FILE = r"./cell-count.db"
 OUT_DIR = r"./outputs/"
+
+os.makedirs(OUT_DIR, exist_ok=True)
 
 
 def query_db(query: str) -> pd.DataFrame:

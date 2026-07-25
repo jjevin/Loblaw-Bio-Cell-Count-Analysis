@@ -1,4 +1,4 @@
-import csv
+import csv, os
 import plotly.graph_objects as go
 from scipy.stats import ttest_ind
 
@@ -44,7 +44,7 @@ def statistical_analysis(
         fig.update_layout(title=population, yaxis_title="Relative Frequency (%)")
 
         figures[population] = fig
-        fig.write_html(OUT_DIR + f"{population}_responders_box.html")
+        fig.write_html(os.path.join(OUT_DIR, f"{population}_responders_box.html"))
 
         # Report which cell populations have a significant difference in relative frequencies between responders and non-responders. Statistics are needed to support any conclusion to convince Yah of Bob’s findings.
         test_result = ttest_ind(
@@ -52,7 +52,9 @@ def statistical_analysis(
         )
         p_vals[population] = test_result.pvalue
 
-        with open(OUT_DIR + f"{population}_analysis.csv", mode="w", newline="") as file:
+        with open(
+            os.path.join(OUT_DIR, f"{population}_analysis.csv"), mode="w", newline=""
+        ) as file:
             writer = csv.writer(file)
             writer.writerow(p_vals.keys())
             writer.writerow(p_vals.values())
