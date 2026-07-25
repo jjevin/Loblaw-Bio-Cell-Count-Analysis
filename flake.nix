@@ -16,6 +16,7 @@
         gnumake
         zlib
         gcc
+        pyright
       ];
 
       env.LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
@@ -26,8 +27,7 @@
       shellHook = ''
         if [ ! -d .venv ]; then
           python -m venv .venv
-          pip install -e ".[dev]"
-        fi
+         fi
         source .venv/bin/activate
       '';
     };
