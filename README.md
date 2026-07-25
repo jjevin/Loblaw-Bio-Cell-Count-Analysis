@@ -57,4 +57,4 @@ Each analysis point is given its own module since they each follow their own lin
 
 <!-- A link to the dashboard. -->
 
-The dashboard for this project is available at: 
+The dashboard for this project is available [on streamlit](https://fritz-loblaw-bio.streamlit.app/), or can be locally hosted with `streamlit run dashboard.py`. 
