@@ -7,7 +7,7 @@ def calc_avg_b_cells() -> float:
     # All sample and treatment types
     # average number of B cells
     # responders
-    # time=0? Use two decimals (XXX.XX).
+    # time=0
     query = """
         SELECT sa.b_cell
         FROM samples sa
@@ -25,6 +25,7 @@ def calc_avg_b_cells() -> float:
     return round(b_cell_avg, 2)
 
 
+# Additional calculations for dashboard metrics
 def get_bcell_context() -> pd.DataFrame:
     query = """
         SELECT su.sex, su.response, sa.b_cell

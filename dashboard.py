@@ -11,7 +11,7 @@ st.set_page_config(page_title="Loblaw Bio Cell Count Analysis", layout="wide")
 st.title("Cell Count Analysis - Bob's Dashboard")
 
 
-@st.cache_data
+@st.cache_data  # load function to allow caching
 def load_all():
     samples_results = init.get_samples_df()
     stats_results = stat.statistical_analysis(samples_results[0])
@@ -21,6 +21,7 @@ def load_all():
     return samples_results, stats_results, subset_results, avg_b_cells, b_cell_context
 
 
+# Called in stats tab to denote significant differences
 def _highlight_significant(row: pd.Series) -> list[str]:
     color = "background-color: #d4f4dd" if row["Significant (p < 0.05)"] else ""
     return [color] * len(row)
@@ -54,7 +55,6 @@ with tab2:
     )
 
     st.dataframe(filtered_df, width="stretch")
-
     st.plotly_chart(overview_fig, width="stretch")
 
 with tab3:
@@ -67,7 +67,6 @@ with tab3:
     p_df["Significant (p < 0.05)"] = p_df["p-value"] < 0.05
 
     st.dataframe(p_df.style.apply(_highlight_significant, axis=1), width="stretch")
-
     st.plotly_chart(combined_fig, width="stretch")
 
 with tab4:

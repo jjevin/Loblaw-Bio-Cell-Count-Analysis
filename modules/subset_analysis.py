@@ -4,7 +4,8 @@ from modules.utils import query_db, OUT_DIR
 
 
 def subset_analysis() -> dict[str, pd.DataFrame]:
-    # "Identify all melanoma PBMC samples at baseline (time_from_treatment_start is 0) from patients who have been treated with miraclib."
+    # Identify all melanoma PBMC samples at baseline (time_from_treatment_start is 0)
+    # from patients who have been treated with miraclib.
     query = """
         SELECT sa.*, su.response, su.sex
         FROM samples sa

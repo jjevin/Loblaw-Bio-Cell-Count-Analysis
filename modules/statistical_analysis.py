@@ -31,12 +31,12 @@ def statistical_analysis(
     nonresponders_df = filtered_df.query('response == "no"')
 
     p_vals = dict()
-    # figures = dict()
     fig = go.Figure()
     for i, population in enumerate(cell_types):
         responder_pop = responders_df.query("population == @population")
         nonresponder_pop = nonresponders_df.query("population == @population")
 
+        # Box plot for responders
         fig.add_trace(
             go.Box(
                 x=[population] * len(responder_pop["percentage"]),
@@ -47,6 +47,7 @@ def statistical_analysis(
                 showlegend=(i == 0),
             )
         )
+        # Box plot for non-responders
         fig.add_trace(
             go.Box(
                 x=[population] * len(nonresponder_pop["percentage"]),
@@ -58,12 +59,15 @@ def statistical_analysis(
             )
         )
 
-        # Report which cell populations have a significant difference in relative frequencies between responders and non-responders. Statistics are needed to support any conclusion to convince Yah of Bob’s findings.
+        # Report which cell populations have a significant difference in
+        # relative frequencies between responders and non-responders. Statistics
+        # are needed to support any conclusion to convince Yah of Bob’s findings.
         test_result = ttest_ind(
             responder_pop["percentage"], nonresponder_pop["percentage"]
         )
         p_vals[population] = test_result.pvalue
 
+        # Saving analysis results for population
         with open(
             os.path.join(OUT_DIR, f"{population}_analysis.csv"), mode="w", newline=""
         ) as file:
